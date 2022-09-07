@@ -1,5 +1,5 @@
 import { MailerService } from "@nestjs-modules/mailer";
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus, Logger } from "@nestjs/common";
 import { ConvertService } from "./convert.service";
 import { EmailDTO } from "./dto/email.dto";
 
@@ -10,11 +10,12 @@ export class HelperService extends ConvertService {
     super();
   }
 
-  async sendMail(email: EmailDTO) {
+  async sendMails(email: EmailDTO) {
     try {
+      Logger.log(email, "email")
       return this.mailerService.sendMail(email);
     } catch (error) {
-      throw new HttpException("email.send", HttpStatus.BAD_REQUEST);
+      throw new HttpException(`helper.send.email: ${error.message}`, HttpStatus.BAD_REQUEST);
     }
   }
 }

@@ -16,7 +16,7 @@ import { HelperService } from './helper.service';
           pass: process.env.SMTP_PASS
         }
       }
-    }),
+    })
   ],
   providers: [ConvertService, DatetimeService, HelperService],
   exports: [DatetimeService, ConvertService, HelperService]
