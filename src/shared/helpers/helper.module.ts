@@ -6,18 +6,6 @@ import { HelperService } from './helper.service';
 
 @Global()
 @Module({
-  imports: [
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.SMTP_HOST,
-        port: parseInt(`${process.env.SMTP_PORT}`),
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS
-        }
-      }
-    })
-  ],
   providers: [ConvertService, DatetimeService, HelperService],
   exports: [DatetimeService, ConvertService, HelperService]
 })
