@@ -24,7 +24,7 @@
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
-    "@nestjs/platform-express": "^6.7.2",
+    "@nestjs/platform-express": "^9.0.11",
     "env-cmd": "^10.1.0",
     "googleapis": "105",
     "nodemailer": "^6.7.8",
