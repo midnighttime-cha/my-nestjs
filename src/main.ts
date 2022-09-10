@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // import * as compression from 'compression';
 import { Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { MyLogger } from './shared/logger/logger.service';
 
 const port = process.env.API_PORT; // Declare api port
 const pjson = require('../package.json'); // get api version from package.json
@@ -13,7 +14,9 @@ async function bootstrap() {
   const setVersion = pjson.version; // API version
 
   //ตั้งค่าให้ NestJS ใช้ Express Platform
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), {
+    logger: new MyLogger(),
+  });
 
   // ตั้งค่า CORS
   app.enableCors({
