@@ -6,10 +6,12 @@ const bodyParser = require('body-parser');
 import { Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-const port = process.env.API_PORT;
-const pjson = require('../package.json');
+const port = process.env.API_PORT; // Declare api port
+const pjson = require('../package.json'); // get api version from package.json
 
 async function bootstrap() {
+  const setVersion = pjson.version; // API version
+
   //ตั้งค่าให้ NestJS ใช้ Express Platform
   const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());
 
@@ -27,13 +29,16 @@ async function bootstrap() {
   // (Optional) ใช้กรณีไม่ได้เรียก API ผ่าน NGINX
   // app.use(compression());
 
+  // Set global prefix
   app.setGlobalPrefix('v1');
 
+  // Set Swagger
+  // Swagger option
   const swaggerCustomOptions = {
     swaggerOptions: { docExpansion: 'list', defaultModelsExpandDepth: -1, filter: true },
   };
-  const setVersion = pjson.version;
 
+  // swagger builder
   const options = new DocumentBuilder()
     .addServer(`${process.env.API_HOST}`, `[${process.env.API_SERVTYPE}] API My NestJS`) // Set server url
     .setTitle('My NestJS API') // Set api title
@@ -44,12 +49,14 @@ async function bootstrap() {
     .addTag('Authentication & Access') // Set api default tags.
     .build();
 
+  // create swagger
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/', app, document, swaggerCustomOptions);
 
+  // Expose port
   await app.listen(port);
   await Logger.log("==============================")
-  await Logger.log(`Server running on [${process.env.API_SERVTYPE}] : ${await app.getUrl()}`, 'Bootstrap');
+  await Logger.log(`Server running on [${process.env.API_SERVTYPE}][v${setVersion}] : ${await app.getUrl()}`, 'Bootstrap');
   await Logger.log("==============================")
 }
 bootstrap();
