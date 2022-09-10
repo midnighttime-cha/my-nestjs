@@ -13,7 +13,7 @@ export class MyLogger implements LoggerService {
       fs.mkdirSync(`${logDir}/log`);
     }
 
-    fs.appendFile(`${logDir}/log/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateFormat("DD/MM/YYYY H:i:s")}] [${optionalParams[0]}: ${message}]\n`, function (err) {
+    fs.appendFile(`${logDir}/log/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateNow()}] [${optionalParams[0]}: ${message}]\n`, function (err) {
       if (err) throw err;
     });
   }
@@ -26,7 +26,7 @@ export class MyLogger implements LoggerService {
       fs.mkdirSync(`${logDir}/error`);
     }
 
-    fs.appendFile(`${logDir}/error/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateFormat("DD/MM/YYYY H:i:s")}] [${optionalParams[0]}: ${message}]\n`, function (err) {
+    fs.appendFile(`${logDir}/error/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[DATE: ${message.timestamp}] [PATH: ${message.path}] [MSG: ${message.message}] [DATA: ${JSON.stringify(message)}]\n`, function (err) {
       if (err) throw err;
     });
   }
@@ -39,7 +39,7 @@ export class MyLogger implements LoggerService {
       fs.mkdirSync(`${logDir}/warn`);
     }
 
-    fs.appendFile(`${logDir}/warn/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateFormat("DD/MM/YYYY H:i:s")}] [${optionalParams[0]}: ${message}]\n`, function (err) {
+    fs.appendFile(`${logDir}/warn/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateNow()}] [${optionalParams[0]}: ${message}]\n`, function (err) {
       if (err) throw err;
     });
   }
@@ -52,7 +52,7 @@ export class MyLogger implements LoggerService {
       fs.mkdirSync(`${logDir}/debug`);
     }
 
-    fs.appendFile(`${logDir}/debug/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateFormat("DD/MM/YYYY H:i:s")}] [${optionalParams[0]}: ${message}]\n`, function (err) {
+    fs.appendFile(`${logDir}/debug/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateNow()}] [${optionalParams[0]}: ${message}]\n`, function (err) {
       if (err) throw err;
     });
   }
@@ -65,7 +65,7 @@ export class MyLogger implements LoggerService {
       fs.mkdirSync(`${logDir}/verbose`);
     }
 
-    fs.appendFile(`${logDir}/verbose/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateFormat("DD/MM/YYYY H:i:s")}] [${optionalParams[0]}: ${message}]\n`, function (err) {
+    fs.appendFile(`${logDir}/verbose/${this.dt.dateFormat("YYYY-MM-DD")}.log`, `[${this.dt.dateNow()}] [${optionalParams[0]}: ${message}]\n`, function (err) {
       if (err) throw err;
     });
   }

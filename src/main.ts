@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { MyLogger } from './shared/logger/logger.service';
 
-const port = process.env.API_PORT; // Declare api port
+const port = process.env.APP_PORT; // Declare api port
 const pjson = require('../package.json'); // get api version from package.json
 
 async function bootstrap() {
@@ -43,12 +43,12 @@ async function bootstrap() {
 
   // swagger builder
   const options = new DocumentBuilder()
-    .addServer(`${process.env.API_HOST}`, `[${process.env.API_SERVTYPE}] API My NestJS`) // Set server url
+    .addServer(`${process.env.APP_HOST}`, `[${process.env.APP_SERVTYPE}] API My NestJS`) // Set server url
     .setTitle('My NestJS API') // Set api title
     .setDescription('The My NestJS API description') // Set api description
     .setVersion(setVersion) // Set api version
     .addBearerAuth() // Set api authentication type
-    .setContact('My NestJS', `${process.env.API_HOST}`, `${process.env.API_EMAIL}`) // Set api contact to developer or staff
+    .setContact('My NestJS', `${process.env.APP_HOST}`, `${process.env.APP_EMAIL}`) // Set api contact to developer or staff
     .addTag('Authentication & Access') // Set api default tags.
     .build();
 
@@ -59,7 +59,7 @@ async function bootstrap() {
   // Expose port
   await app.listen(port);
   await Logger.log("==============================")
-  await Logger.log(`Server running on [${process.env.API_SERVTYPE}][v${setVersion}] : ${await app.getUrl()}`, 'Bootstrap');
+  await Logger.log(`Server running on [${process.env.APP_SERVTYPE}][v${setVersion}] : ${await app.getUrl()}`, 'Bootstrap');
   await Logger.log("==============================")
 }
 bootstrap();
