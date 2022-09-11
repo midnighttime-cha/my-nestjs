@@ -22,7 +22,7 @@ async function bootstrap() {
   // ตั้งค่า CORS
   app.enableCors({
     origin: true,
-    methods: 'POST, GET, PUT, PATCH, DELETE, OPTIONS',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
 

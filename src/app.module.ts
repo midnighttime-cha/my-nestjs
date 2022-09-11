@@ -13,6 +13,7 @@ import { ErrorsInterceptor } from './shared/interceptor/errors.interceptor';
 import { CacheInterceptor } from './shared/interceptor/cache.interceptor';
 import { TimeoutInterceptor } from './shared/interceptor/timeout.interceptor';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -38,10 +39,11 @@ import { UserModule } from './user/user.module';
         connectTimeoutMS: 30000,  // connection timeout: [NUmber]
       }
     ),
+    AuthModule,
     EmailModule,
     SharedModule,
     HealthModule,
-    UserModule
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

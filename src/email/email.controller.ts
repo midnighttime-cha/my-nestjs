@@ -1,7 +1,9 @@
 import { Body, Controller, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { EmailDTO } from './dto/email.dto';
 import { EmailService } from './email.service';
 
+@ApiTags("Email")
 @Controller('email')
 export class EmailController {
   constructor(

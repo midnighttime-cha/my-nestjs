@@ -1,6 +1,8 @@
 import { Controller, Get, HttpException, HttpStatus, Logger, Res } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { HealthCheck, HealthCheckService, HttpHealthIndicator } from '@nestjs/terminus';
 
+@ApiTags("Health")
 @Controller('health')
 export class HealthController {
   constructor(
