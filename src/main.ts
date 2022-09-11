@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication, ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
@@ -14,9 +15,9 @@ async function bootstrap() {
   const setVersion = pjson.version; // API version
 
   //ตั้งค่าให้ NestJS ใช้ Express Platform
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), {
-    logger: new MyLogger(),
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(),
+    { logger: new MyLogger() }
+  );
 
   // ตั้งค่า CORS
   app.enableCors({
@@ -58,9 +59,9 @@ async function bootstrap() {
 
   // Expose port
   await app.listen(port);
-  await Logger.log("==============================")
+  await Logger.log("==============================");
   await Logger.log(`Server running on [${process.env.APP_SERVTYPE}][v${setVersion}] : ${await app.getUrl()}`, 'Bootstrap');
-  await Logger.log("==============================")
+  await Logger.log("==============================");
 }
 bootstrap();
 
