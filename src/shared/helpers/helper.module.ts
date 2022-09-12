@@ -3,11 +3,11 @@ import { Global, Module } from '@nestjs/common';
 import { ConvertService } from './convert.service';
 import { DatetimeService } from './datetime.service';
 import { HelperService } from './helper.service';
-import { ResponseData } from './response-data';
+import { ResponseService } from './response.service';
 
 @Global()
 @Module({
-  providers: [ConvertService, DatetimeService, HelperService, ResponseData],
-  exports: [DatetimeService, ConvertService, HelperService, ResponseData]
+  providers: [ConvertService, DatetimeService, HelperService, ResponseService],
+  exports: [DatetimeService, ConvertService, HelperService, ResponseService]
 })
 export class HelperModule { }

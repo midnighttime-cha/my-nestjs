@@ -41,7 +41,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       timestamp: this.dt.dateNow(),
       path: request.url,
       method: request.method,
-      message: "error : " + (typeof exception.message.message !== 'undefined' ? exception.message.message : exception.message),
+      message: (typeof exception.message !== 'undefined' ? exception.message : (typeof exception.message.error !== "undefined" ? exception.message.error : "")),
       displayTotal: 0,
       total: 0,
       state: null,

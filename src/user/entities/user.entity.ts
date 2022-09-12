@@ -3,10 +3,11 @@ import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedCol
 import * as bcrypt from 'bcryptjs';
 import fs = require("fs");
 import * as jwt from 'jsonwebtoken';
-import { User } from '../interfaces/user.interface';
+import { UserInterfaces } from '../interfaces/user.interface';
+import { Logger } from '@nestjs/common';
 
 @Entity({ name: 'users' })
-export class Users extends HelperService {
+export class UserEntity extends HelperService {
   constructor() {
     super();
   }
@@ -35,7 +36,7 @@ export class Users extends HelperService {
   async hashPassword() {
     const date = this.dateFormat('YYMM');
     const type = (typeof this.type !== "undefined" ? this.type : "US");
-    const countUser = await getManager().getRepository(Users).createQueryBuilder("A").where("A.type = :type", { type }).getCount();
+    const countUser = await getManager('default').getRepository(UserEntity).createQueryBuilder("A").where("A.type = :type", { type }).getCount();
 
     this.code = `${type}${date}${`${(countUser + 1)}`.padStart(4, '0')}`;
     this.password = await bcrypt.hash(this.password.trim(), 10);
@@ -54,22 +55,24 @@ export class Users extends HelperService {
     const { id, email, code, username, type, level } = this;
 
     // PRIVATE key
-    const privateKEY = fs.readFileSync(`${process.env.APP_PRIVATE_KEY}`, 'utf8');
+    const privateKEY = fs.readFileSync(`./key/private`, 'utf8');
 
-    return jwt.sign({ id, email, code, username, type, level }, privateKEY, {
-      issuer: `${process.env.APP_ISSUER}`,
-      subject: `${process.env.APP_SUBJECT}`,
-      audience: `${process.env.APP_AUDIENCE}`,
-      expiresIn: "7d",
-      algorithm: "RS256"
-    });
+    // const accessToken = jwt.sign({ id, email, code, username, type, level }, privateKEY, {
+    //   issuer: `${process.env.APP_ISSUER}`,
+    //   subject: `${process.env.APP_SUBJECT}`,
+    //   audience: `${process.env.APP_AUDIENCE}`,
+    //   expiresIn: "7d",
+    //   algorithm: "RS256"
+    // });
+    const accessToken = jwt.sign({ id, email, code, username, type, level }, process.env.APP_SECRET);
+    return accessToken;
   }
 
   async comparePassword(text: string) {
     return await bcrypt.compare(text, this.password);
   }
 
-  toResponseObject(lang: string = "", showPassword: boolean = false, showToken: boolean = false): Promise<User | undefined> {
+  toResponseObject(lang: string = "", showPassword: boolean = false, showToken: boolean = false): Promise<UserInterfaces | undefined> {
     const {
       id, code, type, level, username, password, firstNameTH, lastNameTH, firstNameEN, lastNameEN, email, phoneNo,
       mobileNo, isActive, isDelete, createBy, modifyBy, createAt, modifyAt, accessToken

@@ -10,7 +10,6 @@ import { HttpExceptionFilter } from './shared/exeption/http-exception.filter';
 import { LoggingInterceptor } from './shared/interceptor/logging.interceptor';
 import { TransformInterceptor } from './shared/interceptor/transform.interceptor';
 import { ErrorsInterceptor } from './shared/interceptor/errors.interceptor';
-import { CacheInterceptor } from './shared/interceptor/cache.interceptor';
 import { TimeoutInterceptor } from './shared/interceptor/timeout.interceptor';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
@@ -52,7 +51,7 @@ import { AuthModule } from './auth/auth.module';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-    {
+    /* {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
     },
@@ -66,12 +65,8 @@ import { AuthModule } from './auth/auth.module';
     },
     {
       provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
       useClass: TimeoutInterceptor,
-    },
+    }, */
   ],
 })
 export class AppModule { }

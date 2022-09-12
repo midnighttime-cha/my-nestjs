@@ -9,7 +9,8 @@ export class AppController {
   ) { }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getHello(@Res() res) {
+    const text = await this.appService.getHello();
+    return await res.status(HttpStatus.OK).json({ text });
   }
 }

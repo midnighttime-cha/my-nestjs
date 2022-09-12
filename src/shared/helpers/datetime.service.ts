@@ -1,5 +1,3 @@
-import { Logger } from "@nestjs/common";
-
 export class DatetimeService {
   dateNow() {
     return new Date().toISOString().toLocaleString();
