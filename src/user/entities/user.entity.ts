@@ -55,16 +55,16 @@ export class UserEntity extends HelperService {
     const { id, email, code, username, type, level } = this;
 
     // PRIVATE key
-    const privateKEY = fs.readFileSync(`./key/private`, 'utf8');
+    const privateKEY = fs.readFileSync(`${process.env.APP_PRIVATE_KEY}`, 'utf8');
 
-    // const accessToken = jwt.sign({ id, email, code, username, type, level }, privateKEY, {
-    //   issuer: `${process.env.APP_ISSUER}`,
-    //   subject: `${process.env.APP_SUBJECT}`,
-    //   audience: `${process.env.APP_AUDIENCE}`,
-    //   expiresIn: "7d",
-    //   algorithm: "RS256"
-    // });
-    const accessToken = jwt.sign({ id, email, code, username, type, level }, process.env.APP_SECRET);
+    const accessToken = jwt.sign({ id, email, code, username, type, level }, privateKEY, {
+      issuer: `${process.env.APP_ISSUER}`,
+      subject: `${process.env.APP_SUBJECT}`,
+      audience: `${process.env.APP_AUDIENCE}`,
+      expiresIn: "1d",
+      algorithm: "RS256"
+    });
+    // const accessToken = jwt.sign({ id, email, code, username, type, level }, process.env.APP_SECRET);
     return accessToken;
   }
 

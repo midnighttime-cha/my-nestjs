@@ -8,8 +8,8 @@ import { AuthService } from './auth.service';
   imports: [
     JwtModule.register({
       secret: `${process.env.APP_SECRET}`,
-      publicKey: './key/public.pub',
-      privateKey: './key/private',
+      publicKey: `${process.env.APP_PUBLIC_KEY}`,
+      privateKey: `${process.env.APP_PRIVATE_KEY}`,
       signOptions: { expiresIn: '1d' },
     }),
     UserModule

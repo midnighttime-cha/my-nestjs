@@ -24,12 +24,12 @@ export class AuthGaurd implements CanActivate {
     const token = auth.split(' ')[1];
     try {
       // PUBLIC key
-      const publicKEY = fs.readFileSync(`${process.env.PUBLIC_KEY}`, 'utf8');
+      const publicKEY = fs.readFileSync(`${process.env.APP_PUBLIC_KEY}`, 'utf8');
 
       const decode = await jwt.verify(token, publicKEY, {
-        issuer: `${process.env.ISSUER}`,
-        subject: `${process.env.SUBJECT}`,
-        audience: `${process.env.AUDIENCE}`,
+        issuer: `${process.env.APP_ISSUER}`,
+        subject: `${process.env.APP_SUBJECT}`,
+        audience: `${process.env.APP_AUDIENCE}`,
         algorithms: ["RS256"]
       });
 

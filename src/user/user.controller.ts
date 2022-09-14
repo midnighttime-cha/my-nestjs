@@ -7,6 +7,7 @@ import { UserService } from './user.service';
 import { MyLogger } from 'src/shared/logger/logger.service';
 import { DatetimeService } from 'src/shared/helpers/datetime.service';
 import { HelperService } from 'src/shared/helpers/helper.service';
+import { AuthGaurd } from 'src/shared/guard/auth.guard';
 
 @ApiTags("User")
 @Controller('user')
@@ -19,8 +20,8 @@ export class UserController extends HelperService {
   @Get()
   @ApiOperation({ summary: "เรียกดูข้อมูลทั้งหมด" })
   @ApiQuery({ name: "username" })
-  // @ApiBearerAuth()
-  // @UseGuards(new AuthGaurd())
+  @ApiBearerAuth()
+  @UseGuards(new AuthGaurd())
   async findData(@Res() res, @Req() req, @Query() query) {
     const responseData = await this.userServices.findUserOne(query.username);
     return await this.resdata.responseFindOneSuccess(req, res, responseData);
@@ -31,7 +32,6 @@ export class UserController extends HelperService {
   @Post('register')
   @UsePipes(new ValidationPipe())
   async register(@Req() req, @Res() res, @Body() data: CreateUserDTO) {
-    Logger.log(data, "data");
     const responseData = await this.userServices.createUser(data, "AM",);
 
     // return this.resdata.responseFindOneSuccess(req, res, responseData);
